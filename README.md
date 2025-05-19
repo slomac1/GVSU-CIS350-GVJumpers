@@ -1,4 +1,4 @@
-# Team Name
+# GVJumpers
 
 Project description (~1 Paragraph)
 
