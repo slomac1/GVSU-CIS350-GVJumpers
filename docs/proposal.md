@@ -4,9 +4,10 @@ Team members: Chase Sloma, Libby Gresley, Lucas Williams, Sidarth Sirimalla
 
 # Introduction
 
-Still working on this, will be having a team meeting on Sunday to cover everything here and really get the ball rolling.
-
-The main idea of this project is to have a hub in which you can play multiple games. The hub though, or menu, is an actual game as well. It will start off as a 2D platformer where you will be able to navigate to different rooms within the map and be able to launch other games. 
+We will be creating a 2D platformer in which you can move around in an environment in order to play other 'minigames' and collect a currency( either coins, money, or tickets) in order to be able to complete a task that marks the end of the game. The possible themes of the starting area could be a Casino, Carnival, or Arcade. Potentially adding in enemies into the platformer that drop an item that can be turned in in order to play the minigames. The minigames will be simple, solo and potentially puzzle centric.
+* 2D platformer as main environment
+* 3 or more minigames to play
+* A currency
 
 # Anticipated Technologies
 
