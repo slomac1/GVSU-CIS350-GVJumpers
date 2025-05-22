@@ -3,35 +3,38 @@
 Doc discription 
 
 # Functional Requirements
-1. 
-2.
-3.
-4.
-5.
-6.
-7.
-8.
-9.
-10.
-11.
-12.
-13.
-14.
-15.
+1. Platformer
+    1. 
+    2. 
+    3.  
+2. Darts
+    1. There shall be a dart board.
+    2. There shall be different point values associated to sections of the dart board. 
+    3. There shall be a circle to indicate where the dart will land.
+3. Game 2
+    1. 
+    2. 
+    3. 
+4. Game 3
+    1. 
+    2. 
+    3. 
+5. The background color for all mini-games shall have an RGB value of 0x000000 or 0x000000. (not sure what colors yet - feel free to edit).
 
 # Non-Functional Requirements 
-1. 
-2.
-3.
-4.
-5.
-6.
-7.
-8.
-9.
-10.
-11.
-12.
-13.
-14.
-15.
+1. Platformer
+    1. 
+    2. 
+    3.  
+2. Darts 
+    1. There shall be 15 darts.
+    2. The dart shall land within 3 seconds of "throwing" it.
+    3. If the dart causes the score to drop below zero, it shall be invalid. 
+3. Game 2
+    1. 
+    2. 
+    3. 
+4. Game 3
+    1. 
+    2. 
+    3. 
