@@ -4,9 +4,13 @@ Team members: Chase Sloma, Libby Gresley, Lucas Williams, Sidarth Sirimalla
 
 # Introduction
 
-We will be creating a 2D platformer in which you can move around in an environment in order to play other 'minigames' and collect a currency( either coins, money, or tickets) in order to be able to complete a task that marks the end of the game. The possible themes of the starting area could be a Casino, Carnival, or Arcade. Potentially adding in enemies into the platformer that drop an item that can be turned in in order to play the minigames. The minigames will be simple, solo and potentially puzzle centric.
+We will be creating a 2D platformer game with a carnival theme, which will will have booths, the booths when entered will have minigames that the player can play and collect a currency( either coins, money, or tickets) in order to be able to complete a task that marks the end of the game.
+
 * 2D platformer as main environment
-* 3 or more minigames to play
+* 3 minigames:
+*   1) A dartboard game
+    2) A mini block puzzle game
+    3) A Pinko or a card game
 * A currency
 
 # Anticipated Technologies
@@ -16,7 +20,7 @@ We will be creating a 2D platformer in which you can move around in an environme
 
 # Method/Approach
 
-Will be splitting up the project into individual projects and then bring them all together later on
+Will be splitting up the project into individual prarts and then bringing them all together later on
 
 # Estimated Timeline
 
