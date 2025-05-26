@@ -11,9 +11,9 @@ This document contains our software requirment specifications.
     2. There shall be different point values associated to sections of the dart board. 
     3. There shall be a circle to indicate where the dart will land.
 3. Game 2
-    1. -
-    2. -
-    3. -
+    1. There will be a board.
+    2. The board will have different-sized blocks in it, and a square red block.
+    3. There will be slit at one side, where red block should leave.
 4. Game 3
     1. -
     2. -
@@ -30,9 +30,9 @@ This document contains our software requirment specifications.
     2. The dart shall land within 3 seconds of "throwing" it.
     3. If the dart causes the score to drop below zero, it shall be invalid. 
 3. Game 2
-    1. -
-    2. -
-    3. -
+    1. The game will be 1 minute. 
+    2. The player will have 3 tries.
+    3. Each try will have set points.
 4. Game 3
     1. -
     2. -
