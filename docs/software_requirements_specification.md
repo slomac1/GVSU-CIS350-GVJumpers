@@ -14,10 +14,10 @@ This document contains our software requirment specifications.
     1. There will be a board.
     2. The board will have different-sized blocks in it, and a square red block.
     3. There will be slit at one side, where red block should leave.
-4. Game 3
-    1. -
-    2. -
-    3. -
+4. Blackjack Card Game
+    1. The player shall be able to place a wager into the game
+    2. The Player shall have game options to hit, stand, split, or double down in the game.
+    3. The game shall be able to deal out a hand and correctly determine the winner of the hand.
 5. The background color for all mini-games shall have an RGB value of 0x000000 or 0x000000. (not sure what colors yet - feel free to edit).
 
 # Non-Functional Requirements 
@@ -33,7 +33,7 @@ This document contains our software requirment specifications.
     1. The game will be 1 minute. 
     2. The player will have 3 tries.
     3. Each try will have set points.
-4. Game 3
-    1. -
-    2. -
-    3. -
+4. Blackjack Card Game
+    1. The game shall not display entry options that don't make sense for the current situation in the game
+    2. The user shall be able to quit playing whenever they want.
+    3. The user shall not be able to play with a negative credit balance
