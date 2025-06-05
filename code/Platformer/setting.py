@@ -1,0 +1,8 @@
+import pygame
+from os.path import join
+
+WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
+BLOCK_SIZE = 64
+FPS = 60
+GRAVITY = 10
+PLAYER_SPEED = 10
