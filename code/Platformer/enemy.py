@@ -7,6 +7,7 @@ class Enemy(pygame.sprite.Sprite):
         self.index = 0
         self.image = self.surf[self.index]
         self.rect = self.image.get_rect(center = pos)
+        self.mask = pygame.mask.from_surface(self.image)
         self.velocity_y = GRAVITY
         self.velocity_x = 2
         self.moving = False
@@ -54,7 +55,7 @@ class Enemy(pygame.sprite.Sprite):
     def detect_player(self, player_pos):
         playerx_distance = player_pos.x - self.rect.x
         playery_distance = abs(player_pos.y - self.rect.y)
-        if playery_distance < 600 and abs(playerx_distance) < 600:
+        if playery_distance < 640 and abs(playerx_distance) < 600:
             if playerx_distance >= 0:
                 self.direction = 1
             else:

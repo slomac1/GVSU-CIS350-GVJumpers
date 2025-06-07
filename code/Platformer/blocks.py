@@ -9,3 +9,4 @@ class Block(pygame.sprite.Sprite):
         else:
             self.image = surf
         self.rect = self.image.get_rect(center = pos)
+        

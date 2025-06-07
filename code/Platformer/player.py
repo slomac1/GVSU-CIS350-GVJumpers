@@ -7,6 +7,7 @@ class Player(pygame.sprite.Sprite):
         self.index = 0
         self.image = self.surf[self.index]
         self.rect = self.image.get_rect(center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
+        self.mask = pygame.mask.from_surface(self.image)
         self.velocity_y = GRAVITY
         self.direction = 0
 

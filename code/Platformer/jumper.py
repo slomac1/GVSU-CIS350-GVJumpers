@@ -1,7 +1,8 @@
 from setting import *
+from random import randint
 from player import Player
 from enemy import Enemy
-from block import Block
+from blocks import Block
 from attack import Attack
 from tilesheet import Tilesheet
 from tilesheet_manager import create_tilesheets
@@ -39,6 +40,7 @@ class Jumper:
         self.all_carnival_sprites = pygame.sprite.Group()
         self.carnival_level_sprites = pygame.sprite.Group()
         self.minigame_sprites = pygame.sprite.Group()
+        self.player_sprite = pygame.sprite.Group()
 
         self.all_tent_sprites = pygame.sprite.Group()
         self.tent_level_sprites = pygame.sprite.Group()
@@ -89,7 +91,7 @@ class Jumper:
         self.tent = Block(self.all_carnival_sprites, self.tiles['tent'], None, (4000, 168))
 
         # Use to get new tilesheet sizes
-        test_surf = pygame.image.load(join('images', 'archways.png')).convert_alpha()
+        test_surf = pygame.image.load(join('images', 'scaffolding_long.png')).convert_alpha()
         test_rect = test_surf.get_rect(topleft = (0, 0))
         print(test_rect.bottomright)
         '''
@@ -99,18 +101,6 @@ class Jumper:
         self.tent_background = pygame.image.load(join('images', 'tent_background.png')).convert_alpha()
         self.tent_background = pygame.transform.scale(self.tent_background, (3000, 1200))
         self.tent_background_rect = self.tent_background.get_rect(center = (1175, (WINDOW_HEIGHT / 2)))
-
-        # Level blocks 
-        for i in range(-2, 11):
-            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt_top1_dark'], None, (256 + (512 * i), 552))
-            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt_top2_dark'], None, (512 * i, 552))
-            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt1_dark'], None, (256 + (512 * i), 808))
-            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt2_dark'], None, (512 * i, 808))
-        Block(self.all_tent_sprites, self.tiles['side_double'], None, (1064, 296))
-        Block(self.all_tent_sprites, self.tiles['side_single'], None, (1448, 296))
-        Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['short_full'], None, (1600, 360))
-        Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['short_full'], None, (912, 360))
-        Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['long'], None, (1256, 156))
 
         # Enemy sprites
         zombie_tilesheet = Tilesheet('zombie_spritesheet', 146, 249, 2, 4)
@@ -130,7 +120,7 @@ class Jumper:
             player_surf.append(pygame.transform.scale(player_run_walk.get_tile(i, 0), (64, 128)))
         for i in range(4): 
             player_surf.append(pygame.transform.scale(player_jump.get_tile(i, 0), (64, 128)))
-        self.player = Player((self.all_carnival_sprites, self.all_tent_sprites), player_surf)
+        self.player = Player(self.player_sprite, player_surf)
 
         # Fence sprite pull and creating
         self.archway = Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['archway_close'] , None, (428, 284))
@@ -142,12 +132,56 @@ class Jumper:
         Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_right'], None, (4831, 360))
         Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_right'], None, (5037, 360))
     
-    def create_enemies(self):
-        self.enemy_sprites.empty()
-        Enemy((self.all_tent_sprites, self.enemy_sprites), self.zombie_surf, (1244, (WINDOW_HEIGHT / 2)))
-        Enemy((self.all_tent_sprites, self.enemy_sprites), self.zombie_surf, (1244, -4))
-        Enemy((self.all_tent_sprites, self.enemy_sprites), self.zombie_surf, (1974, 296))
-        
+    def create_tent_area(self):
+        for sprite in self.all_tent_sprites:
+            sprite.kill()
+
+        # ground blocks 
+        for i in range(-2, 11):
+            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt_top1_dark'], None, (256 + (512 * i), 552))
+            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt_top2_dark'], None, (512 * i, 552))
+            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt1_dark'], None, (256 + (512 * i), 808))
+            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt2_dark'], None, (512 * i, 808))
+
+        # scaffolding array
+        for i in range(9):
+            for j in range(3):
+                Block(self.all_tent_sprites, self.tiles['side_double'], None, (558 + (448 * i), 296 - (256 * j)))
+
+        # walking planks
+        for i in range(20):
+            piece = randint(0,1)
+            if piece == 0:
+                x = randint(0,7)
+                y = randint(0,2)
+                new_block = Block((), self.tiles['medium'], None, (782 + (448 * x), 156 - (256 * y)))
+            else:
+                x = randint(0,6)
+                y = randint(0,2)
+                new_block = Block((), self.tiles['long'], None, (1006 + (448 * x), 156 - (256 * y)))
+            if not pygame.sprite.spritecollide(new_block, self.tent_level_sprites, False):
+                self.all_tent_sprites.add(new_block)
+                self.tent_level_sprites.add(new_block)
+
+        # Enemies
+        for i in range(10):
+            x = randint(0,7)
+            y = randint(0,2)
+            new_enemy = Enemy((), self.zombie_surf, (782 + (448 * x), 160 - (256 * y)))
+            if pygame.sprite.spritecollide(new_enemy, self.tent_level_sprites, False):
+                self.enemy_sprites.add(new_enemy)
+                self.all_tent_sprites.add(new_enemy)
+
+        # stands and ring wall
+        stands_right = pygame.image.load(join('images', 'stands.png')).convert_alpha()
+        stands_left = pygame.transform.flip(stands_right, True, False)
+        Block(self.all_tent_sprites, stands_left, None, (-200, 200))
+        Block(self.all_tent_sprites, stands_right, None, (4900, 200))
+        for i in range(3):
+            Block(self.all_tent_sprites, self.tiles['ring_wall'], None, (4600 + (i * 220), 360))
+            Block(self.all_tent_sprites, self.tiles['ring_wall'], None, (160 - (i * 220), 360))
+
+        return
         
     def handle_movement(self):
         self.player.original_location = self.player.rect.center
@@ -234,7 +268,7 @@ class Jumper:
         damage_cooldown = (current_time - self.player.damage_taken_time)
         if damage_cooldown >= 250:
             for enemy in self.enemy_sprites:
-                if pygame.sprite.collide_rect(self.player, enemy):
+                if pygame.sprite.collide_mask(self.player, enemy):
                     self.player.damage_taken_time = current_time
                     self.player.health -= 10
                     return True
@@ -292,7 +326,7 @@ class Jumper:
         
         if self.tickets >= 100:
             self.archway.kill()
-            self.archway = Block(self.all_carnival_sprites, self.fence_tiles['archway_open'] , None, (428, 284))
+            self.archway = Block(self.all_carnival_sprites, self.tiles['archway_open'] , None, (428, 284))
 
         while self.carnival_running:
             self.clock.tick(FPS)
@@ -306,6 +340,7 @@ class Jumper:
             self.display_surface.fill('#a7e0fa')
             for sprite in self.all_carnival_sprites:
                 self.display_surface.blit(sprite.image, (sprite.rect.x + self.offset_x, sprite.rect.y + self.offset_y))
+            self.display_surface.blit(self.player.image, (WINDOW_WIDTH / 2 - 32, WINDOW_HEIGHT / 2 - 64))
             self.display_character_info()
             self.minigame_booth_prompt()
 
@@ -315,7 +350,7 @@ class Jumper:
         pygame.quit()
 
     def run_dungeon(self):
-        self.create_enemies()
+        self.create_tent_area()
         self.offset_x += (self.player.rect.x - 2350)
         self.player.rect.x = 2350
         while self.dungeon_running == True:
@@ -342,6 +377,7 @@ class Jumper:
             self.display_surface.blit(self.tent_background, (self.tent_background_rect.x + (self.offset_x * .25),self.tent_background_rect.y + (self.offset_y * .25)))
             for sprite in self.all_tent_sprites:
                 self.display_surface.blit(sprite.image, (sprite.rect.x + self.offset_x, sprite.rect.y + self.offset_y))
+            self.display_surface.blit(self.player.image, (WINDOW_WIDTH / 2 - 32, WINDOW_HEIGHT / 2 - 64))
             self.display_surface.blit(self.overlay, (0,0))
             self.display_character_info()
 
