@@ -48,7 +48,6 @@ class Jumper:
         self.attack_sprites = pygame.sprite.Group()
 
         self.tiles = create_tilesheets()
-        print(len(self.tiles))
 
         '''
         Sprites for level and background for the carnival area
@@ -94,6 +93,7 @@ class Jumper:
         test_surf = pygame.image.load(join('images', 'scaffolding_long.png')).convert_alpha()
         test_rect = test_surf.get_rect(topleft = (0, 0))
         print(test_rect.bottomright)
+
         '''
         Sprites for level and background in tent area
         
