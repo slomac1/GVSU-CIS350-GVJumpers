@@ -4,8 +4,13 @@ from enemy import Enemy
 from block import Block
 from attack import Attack
 from tilesheet import Tilesheet
-import tickets_manager
+from tilesheet_manager import create_tilesheets
 import save_manager
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import tickets_manager
+
 
 class Jumper:
     def __init__(self):
@@ -40,6 +45,9 @@ class Jumper:
         self.enemy_sprites = pygame.sprite.Group()
         self.attack_sprites = pygame.sprite.Group()
 
+        self.tiles = create_tilesheets()
+        print(len(self.tiles))
+
         '''
         Sprites for level and background for the carnival area
         
@@ -60,55 +68,30 @@ class Jumper:
         self.tent_prompt_surf = pygame.image.load(join('images', 'enter_tent_prompt.png')).convert_alpha()
         self.tent_prompt_surf = pygame.transform.scale(self.tent_prompt_surf, (250, 75))
 
-        # ground level tile sheet
-        ground_tilesheet = Tilesheet('update_tile_blocks', 228, 214, 2, 4)
-        ground_sprites = {
-            'grass1' : pygame.transform.scale(ground_tilesheet.get_tile(0,0), (256, 256)),
-            'grass2' : pygame.transform.scale(ground_tilesheet.get_tile(1,0), (256, 256)),
-            'grass_right' : pygame.transform.scale(ground_tilesheet.get_tile(2,0), (256, 256)),
-            'grass_left' : pygame.transform.scale(ground_tilesheet.get_tile(3,0), (256, 256)),
-            'dirt1' : pygame.transform.scale(ground_tilesheet.get_tile(0,1), (256, 256)),
-            'dirt2' : pygame.transform.scale(ground_tilesheet.get_tile(1,1), (256, 256)),
-            'dirt_right' : pygame.transform.scale(ground_tilesheet.get_tile(2,1), (256, 256)),
-            'dirt_left' : pygame.transform.scale(ground_tilesheet.get_tile(3,1), (256, 256))
-            }
-
         # Creating base world with tiles
-        Block((self.carnival_level_sprites, self.all_carnival_sprites), ground_sprites['grass_left'], None, (1664, 452))
-        Block((self.carnival_level_sprites, self.all_carnival_sprites), ground_sprites['grass_right'], None, (1920, 452))
+        Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['grass_left'], None, (1664, 452))
+        Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['grass_right'], None, (1920, 452))
         for i in range(-1,11):
-            Block((self.carnival_level_sprites, self.all_carnival_sprites), ground_sprites['grass1'], None, (256 + (512 * i), 552))
-            Block((self.carnival_level_sprites, self.all_carnival_sprites), ground_sprites['grass2'], None, (512 * i, 552))
-            Block((self.carnival_level_sprites, self.all_carnival_sprites), ground_sprites['dirt1'], None, (256 + (512 * i), 808))
-            Block((self.carnival_level_sprites, self.all_carnival_sprites), ground_sprites['dirt2'], None, (512 * i, 808))
+            Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['grass1'], None, (256 + (512 * i), 552))
+            Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['grass2'], None, (512 * i, 552))
+            Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['dirt1_light'], None, (256 + (512 * i), 808))
+            Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['dirt2_light'], None, (512 * i, 808))
 
         # Ferris wheel sprite pull and create
-        wheel_sprite =  Tilesheet('ferris_wheel', 1024, 1024, 1, 1)
-        wheel_surf = pygame.transform.scale(wheel_sprite.get_tile(0,0), (1024, 1024))
-        Block(self.all_carnival_sprites, wheel_surf, None, (2600, -88))
+        Block(self.all_carnival_sprites, self.tiles['ferris_wheel'], None, (2600, -88))
 
         # Booth sprite pull and creating
-        dart_booth_sprite = Tilesheet('dart_game_booth', 1024, 1024, 1, 1)
-        dart_booth_surf = pygame.transform.scale(dart_booth_sprite.get_tile(0,0), (256, 256))
-        self.dart_game = Block((self.minigame_sprites, self.all_carnival_sprites), dart_booth_surf, None, (1200, 296))
-
-        puzzle_booth_sprite = Tilesheet('puzzle_game_booth', 1024, 1024, 1, 1)
-        puzzle_booth_surf = pygame.transform.scale(puzzle_booth_sprite.get_tile(0,0), (256, 256))
-        self.puzzle_game = Block((self.minigame_sprites, self.all_carnival_sprites), puzzle_booth_surf, None, (1800, 196))
-
-        cards_booth_sprite = Tilesheet('cards_game_booth', 1024, 1024, 1, 1)
-        cards_booth_surf = pygame.transform.scale(cards_booth_sprite.get_tile(0,0), (256, 256))
-        self.card_game = Block((self.minigame_sprites, self.all_carnival_sprites), cards_booth_surf, None, (3400, 296))
+        self.dart_game = Block((self.minigame_sprites, self.all_carnival_sprites), self.tiles['dart_booth'], None, (1200, 296))
+        self.puzzle_game = Block((self.minigame_sprites, self.all_carnival_sprites), self.tiles['puzzle_booth'], None, (1800, 196))
+        self.card_game = Block((self.minigame_sprites, self.all_carnival_sprites), self.tiles['card_booth'], None, (3400, 296))
 
         # Tent sprite pull and creating
-        tent_sprite = Tilesheet('tent', 1024, 1024, 1, 1)
-        tent_surf = pygame.transform.scale(tent_sprite.get_tile(0,0), (512, 512))
-        self.tent = Block(self.all_carnival_sprites, tent_surf, None, (4000, 168))
+        self.tent = Block(self.all_carnival_sprites, self.tiles['tent'], None, (4000, 168))
 
         # Use to get new tilesheet sizes
         test_surf = pygame.image.load(join('images', 'archways.png')).convert_alpha()
-        test_rect = test_surf.get_rect(center = (0, 0))
-        print(test_rect.topleft, test_rect.bottomright)
+        test_rect = test_surf.get_rect(topleft = (0, 0))
+        print(test_rect.bottomright)
         '''
         Sprites for level and background in tent area
         
@@ -117,43 +100,17 @@ class Jumper:
         self.tent_background = pygame.transform.scale(self.tent_background, (3000, 1200))
         self.tent_background_rect = self.tent_background.get_rect(center = (1175, (WINDOW_HEIGHT / 2)))
 
-        # Level sprites 
-        tent_ground_tilsheet = Tilesheet('tent_ground_tiles', 209, 212, 2, 4)
-        scaffolding_tilesheet1 = Tilesheet('scaffolding_sides', 170, 147, 2, 2)
-        scaffolding_tilesheet2 = Tilesheet('scaffolding_short', 155, 77, 2, 2)
-        scaffolding_tilesheet3 = Tilesheet('scaffolding_long', 512, 76, 1, 1)
-        tent_tiles = {}
-        tent_tiles['dirt_top1'] = pygame.transform.scale(tent_ground_tilsheet.get_tile(0,0), (256,256))
-        tent_tiles['dirt_top2'] = pygame.transform.scale(tent_ground_tilsheet.get_tile(0,1), (256,256))
-        tent_tiles['dirt_left'] = pygame.transform.scale(tent_ground_tilsheet.get_tile(2,0), (256,256))
-        tent_tiles['dirt_right'] = pygame.transform.scale(tent_ground_tilsheet.get_tile(2,1), (256,256))
-        tent_tiles['dirt_topleft'] = pygame.transform.scale(tent_ground_tilsheet.get_tile(1,0), (256,256))
-        tent_tiles['dirt_topright'] = pygame.transform.scale(tent_ground_tilsheet.get_tile(1,1), (256,256))
-        tent_tiles['dirt1'] = pygame.transform.scale(tent_ground_tilsheet.get_tile(3,0), (256,256))
-        tent_tiles['dirt2'] = pygame.transform.scale(tent_ground_tilsheet.get_tile(3,1), (256,256))
-        tent_tiles['side_double'] = pygame.transform.scale(scaffolding_tilesheet1.get_tile(0,0), (128, 256))
-        tent_tiles['side_single'] = pygame.transform.scale(scaffolding_tilesheet1.get_tile(0,1), (128, 256))
-        tent_tiles['side_doubletop'] = pygame.transform.scale(scaffolding_tilesheet1.get_tile(1,1), (128, 256))
-        tent_tiles['side_singletop'] = pygame.transform.scale(scaffolding_tilesheet1.get_tile(1,0), (128, 256))
-        tent_tiles['short_full'] = pygame.transform.scale(scaffolding_tilesheet2.get_tile(0,0), (128, 64))
-        tent_tiles['short_left'] = pygame.transform.scale(scaffolding_tilesheet2.get_tile(0,1), (128, 64))
-        tent_tiles['short_middle'] = pygame.transform.scale(scaffolding_tilesheet2.get_tile(1,0), (128, 64))
-        tent_tiles['short_right'] = pygame.transform.scale(scaffolding_tilesheet2.get_tile(1,1), (128, 64))
-        tent_tiles['long'] = pygame.transform.scale(scaffolding_tilesheet3.get_tile(0,0), (512, 64))
-
+        # Level blocks 
         for i in range(-2, 11):
-            Block((self.tent_level_sprites, self.all_tent_sprites), tent_tiles['dirt_top1'], None, (256 + (512 * i), 552))
-            Block((self.tent_level_sprites, self.all_tent_sprites), tent_tiles['dirt_top2'], None, (512 * i, 552))
-            Block((self.tent_level_sprites, self.all_tent_sprites), tent_tiles['dirt1'], None, (256 + (512 * i), 808))
-            Block((self.tent_level_sprites, self.all_tent_sprites), tent_tiles['dirt2'], None, (512 * i, 808))
-        Block(self.all_tent_sprites, tent_tiles['side_double'], None, (1064, 296))
-        Block(self.all_tent_sprites, tent_tiles['side_single'], None, (1448, 296))
-        Block((self.tent_level_sprites, self.all_tent_sprites), tent_tiles['short_full'], None, (1600, 360))
-        Block((self.tent_level_sprites, self.all_tent_sprites), tent_tiles['short_full'], None, (912, 360))
-        Block((self.tent_level_sprites, self.all_tent_sprites), tent_tiles['long'], None, (1256, 156))
-
-        # Background sprites
-
+            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt_top1_dark'], None, (256 + (512 * i), 552))
+            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt_top2_dark'], None, (512 * i, 552))
+            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt1_dark'], None, (256 + (512 * i), 808))
+            Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['dirt2_dark'], None, (512 * i, 808))
+        Block(self.all_tent_sprites, self.tiles['side_double'], None, (1064, 296))
+        Block(self.all_tent_sprites, self.tiles['side_single'], None, (1448, 296))
+        Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['short_full'], None, (1600, 360))
+        Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['short_full'], None, (912, 360))
+        Block((self.tent_level_sprites, self.all_tent_sprites), self.tiles['long'], None, (1256, 156))
 
         # Enemy sprites
         zombie_tilesheet = Tilesheet('zombie_spritesheet', 146, 249, 2, 4)
@@ -176,25 +133,14 @@ class Jumper:
         self.player = Player((self.all_carnival_sprites, self.all_tent_sprites), player_surf)
 
         # Fence sprite pull and creating
-        fence_sprite = Tilesheet('fence_tiles', 215, 131, 2, 2)
-        archway_sprite = Tilesheet('archways', 241, 221, 1, 2)
-        self.fence_tiles = {
-            'archway_open' : pygame.transform.scale(archway_sprite.get_tile(0,0), (280, 280)),
-            'archway_close' : pygame.transform.scale(archway_sprite.get_tile(1,0), (280, 280)),
-            'fence_post_left' : pygame.transform.scale(fence_sprite.get_tile(0,0), (256, 152)),
-            'fence_post_right' : pygame.transform.scale(fence_sprite.get_tile(1,0), (256, 152)),
-            'fence_left' : pygame.transform.scale(fence_sprite.get_tile(1,1), (206, 128)),
-            'fence_right' : pygame.transform.scale(fence_sprite.get_tile(0,1), (206, 128)),
-        }
-
-        self.archway = Block((self.all_carnival_sprites, self.carnival_level_sprites), self.fence_tiles['archway_close'] , None, (428, 284))
+        self.archway = Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['archway_close'] , None, (428, 284))
         Block(self.carnival_level_sprites, None, (280, 300), (428, 0))
-        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.fence_tiles['fence_left'], None, (200, 360))
-        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.fence_tiles['fence_left'], None, (-6, 360))
-        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.fence_tiles['fence_left'], None, (-212, 360))
-        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.fence_tiles['fence_post_left'], None, (4600, 348))
-        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.fence_tiles['fence_right'], None, (4831, 360))
-        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.fence_tiles['fence_right'], None, (5037, 360))
+        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_left'], None, (200, 360))
+        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_left'], None, (-6, 360))
+        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_left'], None, (-212, 360))
+        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_post_left'], None, (4600, 348))
+        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_right'], None, (4831, 360))
+        Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_right'], None, (5037, 360))
     
     def create_enemies(self):
         self.enemy_sprites.empty()

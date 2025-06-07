@@ -1,6 +1,7 @@
+import os
 import json
 
-ticket_file = "tickets.json"
+ticket_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tickets.json'))
 
 def load_tickets():
     with open(ticket_file, 'r') as file:
