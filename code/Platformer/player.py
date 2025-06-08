@@ -1,4 +1,4 @@
-from setting import *
+from .setting import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups, surf):

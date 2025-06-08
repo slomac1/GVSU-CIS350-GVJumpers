@@ -1,9 +1,13 @@
-from setting import *
+from .setting import *
+import sys
+import os
+cur_directory = os.path.dirname(__file__)
+image_directory = os.path.join(cur_directory, "images")
 
 class Tilesheet:
 
     def __init__(self, filename, width, height, rows, cols):
-        image = pygame.image.load(join('images', f'{filename}.png')).convert_alpha()
+        image = pygame.image.load(join(image_directory, f'{filename}.png')).convert_alpha()
         self.sprites = []
 
         for tile_x in range(0, cols):

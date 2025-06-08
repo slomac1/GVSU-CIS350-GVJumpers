@@ -1,4 +1,4 @@
-from setting import *
+from .setting import *
 
 class Block(pygame.sprite.Sprite):
     def __init__(self, groups, surf, size, pos):

@@ -1,5 +1,5 @@
 import json
-from setting import *
+from .setting import *
 
 save_file = "save.json"
 

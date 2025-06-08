@@ -1,4 +1,4 @@
-from setting import *
+from .setting import *
 
 class Attack(pygame.sprite.Sprite):
     def __init__(self, groups, pos):

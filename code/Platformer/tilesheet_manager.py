@@ -1,5 +1,5 @@
-from tilesheet import Tilesheet
-from setting import *
+from .tilesheet import Tilesheet
+from .setting import *
 
 def create_tilesheets():
         ground_tilesheet = Tilesheet('update_tile_blocks', 228, 214, 2, 4)

@@ -1,16 +1,18 @@
-from setting import *
+from .setting import *
 from random import randint
-from player import Player
-from enemy import Enemy
-from blocks import Block
-from attack import Attack
-from tilesheet import Tilesheet
-from tilesheet_manager import create_tilesheets
-import save_manager
+from .player import Player
+from .enemy import Enemy
+from .blocks import Block
+from .attack import Attack
+from .tilesheet import Tilesheet
+from .tilesheet_manager import create_tilesheets
+from . import save_manager
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import tickets_manager
+cur_directory = os.path.dirname(__file__)
+image_directory = os.path.join(cur_directory, "images")
 
 
 class Jumper:
@@ -54,19 +56,19 @@ class Jumper:
         
         '''
         # Controls info for carnival area
-        carnival_controls_surf = pygame.image.load(join('images', 'player_controls.png')).convert_alpha()
+        carnival_controls_surf = pygame.image.load(join(image_directory, 'player_controls.png')).convert_alpha()
         carnival_controls_surf = pygame.transform.scale(carnival_controls_surf, (250, 200))
         Block(self.all_carnival_sprites, carnival_controls_surf, None, (640, 100))
 
         # Controls info for tent area
-        tent_controls_surf = pygame.image.load(join('images', 'player_controls_tent.png')).convert_alpha()
+        tent_controls_surf = pygame.image.load(join(image_directory, 'player_controls_tent.png')).convert_alpha()
         tent_controls_surf = pygame.transform.scale(tent_controls_surf, (250, 133))
         Block(self.all_tent_sprites, tent_controls_surf, None, (2600, 150))
 
         # Control prompt for entering booth and tent
-        self.booth_prompt_surf = pygame.image.load(join('images', 'enter_minigame_prompt.png')).convert_alpha()
+        self.booth_prompt_surf = pygame.image.load(join(image_directory, 'enter_minigame_prompt.png')).convert_alpha()
         self.booth_prompt_surf = pygame.transform.scale(self.booth_prompt_surf, (250, 75))
-        self.tent_prompt_surf = pygame.image.load(join('images', 'enter_tent_prompt.png')).convert_alpha()
+        self.tent_prompt_surf = pygame.image.load(join(image_directory, 'enter_tent_prompt.png')).convert_alpha()
         self.tent_prompt_surf = pygame.transform.scale(self.tent_prompt_surf, (250, 75))
 
         # Creating base world with tiles
@@ -90,7 +92,7 @@ class Jumper:
         self.tent = Block(self.all_carnival_sprites, self.tiles['tent'], None, (4000, 168))
 
         # Use to get new tilesheet sizes
-        test_surf = pygame.image.load(join('images', 'scaffolding_long.png')).convert_alpha()
+        test_surf = pygame.image.load(join(image_directory, 'scaffolding_long.png')).convert_alpha()
         test_rect = test_surf.get_rect(topleft = (0, 0))
         print(test_rect.bottomright)
 
@@ -98,7 +100,7 @@ class Jumper:
         Sprites for level and background in tent area
         
         '''
-        self.tent_background = pygame.image.load(join('images', 'tent_background.png')).convert_alpha()
+        self.tent_background = pygame.image.load(join(image_directory, 'tent_background.png')).convert_alpha()
         self.tent_background = pygame.transform.scale(self.tent_background, (3000, 1200))
         self.tent_background_rect = self.tent_background.get_rect(center = (1175, (WINDOW_HEIGHT / 2)))
 
@@ -173,7 +175,7 @@ class Jumper:
                 self.all_tent_sprites.add(new_enemy)
 
         # stands and ring wall
-        stands_right = pygame.image.load(join('images', 'stands.png')).convert_alpha()
+        stands_right = pygame.image.load(join(image_directory, 'stands.png')).convert_alpha()
         stands_left = pygame.transform.flip(stands_right, True, False)
         Block(self.all_tent_sprites, stands_left, None, (-200, 200))
         Block(self.all_tent_sprites, stands_right, None, (4900, 200))
@@ -188,9 +190,12 @@ class Jumper:
         keys_pressed = pygame.key.get_pressed()
         if keys_pressed[pygame.K_r] and self.minigame_booth_prompt():
             self.carnival_running = False
-            self.dungeon_running = True
             self.save_assets()
-            self.run_dungeon()
+            if self.minigame_to_play == 'dungeon':
+                self.dungeon_running = True
+                self.run_dungeon()
+            else:
+                self.carnival_running = False
             return
         elif keys_pressed[pygame.K_ESCAPE] and self.dungeon_running:
             self.dungeon_running = False
@@ -287,6 +292,7 @@ class Jumper:
         self.display_surface.blit(text_surf2, text_rect2)
 
     def minigame_booth_prompt(self):
+        self.minigame_to_play = None
         for booth in self.minigame_sprites:
             if pygame.sprite.collide_rect(self.player, booth):
                 self.display_surface.blit(self.booth_prompt_surf, (booth.rect.x + self.offset_x, booth.rect.y - 75 + self.offset_y))
@@ -296,9 +302,10 @@ class Jumper:
                     self.minigame_to_play = 'cards'
                 else:
                     self.minigame_to_play = 'puzzle'
-                return False
+                return True
         if pygame.sprite.collide_rect(self.player, self.tent):
             self.display_surface.blit(self.tent_prompt_surf, (self.tent.rect.x + self.offset_x + 125, self.tent.rect.y + 125 + self.offset_y))
+            self.minigame_to_play = 'dungeon'
             return True
         return False
     
@@ -347,7 +354,6 @@ class Jumper:
             pygame.display.flip()
         tickets_manager.save_tickets(self.tickets)
         self.save_assets()
-        pygame.quit()
 
     def run_dungeon(self):
         self.create_tent_area()
@@ -384,6 +390,3 @@ class Jumper:
             pygame.display.flip()
 
         self.run_carnival()
-
-new_game = Jumper()
-new_game.run_carnival()
