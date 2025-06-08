@@ -1,8 +1,8 @@
 {
-    "offset_x": -3350,
-    "offset_y": 0,
-    "p_index": 1,
-    "p_rectx": 3990,
-    "p_recty": 360,
-    "p_health": 90
+    "offset_x": -1190,
+    "offset_y": 90,
+    "p_index": 8,
+    "p_rectx": 1830,
+    "p_recty": 270,
+    "p_health": 100
 }

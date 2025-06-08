@@ -11,4 +11,10 @@ def play_puzzle():
     block.run_puzzle()
     play_game()
 
+def play_card():
+    pass
+
+def play_dart():
+    pass
+
 play_game()

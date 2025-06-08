@@ -16,9 +16,7 @@ def load():
     try:
         with open(save_file, 'r') as file:
             data = json.load(file)
-        print('Save loaded')
     except:
-        print('Unable to load save, loading default')
         return default
     return data
 
