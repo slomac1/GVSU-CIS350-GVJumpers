@@ -61,9 +61,8 @@ class Jumper:
         Block(self.all_carnival_sprites, carnival_controls_surf, None, (640, 100))
 
         # Controls info for tent area
-        tent_controls_surf = pygame.image.load(join(image_directory, 'player_controls_tent.png')).convert_alpha()
-        tent_controls_surf = pygame.transform.scale(tent_controls_surf, (250, 133))
-        Block(self.all_tent_sprites, tent_controls_surf, None, (2600, 150))
+        self.tent_controls_surf = pygame.image.load(join(image_directory, 'player_controls_tent.png')).convert_alpha()
+        self.tent_controls_surf = pygame.transform.scale(self.tent_controls_surf, (250, 133))
 
         # Control prompt for entering booth and tent
         self.booth_prompt_surf = pygame.image.load(join(image_directory, 'enter_minigame_prompt.png')).convert_alpha()
@@ -182,6 +181,8 @@ class Jumper:
         for i in range(3):
             Block(self.all_tent_sprites, self.tiles['ring_wall'], None, (4600 + (i * 220), 360))
             Block(self.all_tent_sprites, self.tiles['ring_wall'], None, (160 - (i * 220), 360))
+
+        Block(self.all_tent_sprites, self.tent_controls_surf, None, (2600, 250))
 
         return
         
