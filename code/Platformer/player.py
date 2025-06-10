@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.original_direction = 1
 
         self.in_air = False
+        self.attacking = False
 
         self.original_location = [0,0]
         self.current_locaiton = [0,0]
@@ -26,22 +27,29 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         current_time = pygame.time.get_ticks()
-        if current_time - self.last_movement_time > 200 and not self.moving and not self.in_air:
+        if current_time - self.last_movement_time > 200 and not self.moving and not self.in_air and not self.attacking:
             self.last_movement_time = current_time
-            if self.index == 3:
+            if self.index == 0:
                 self.index = 1
             else:
-                self.index = 3
-        elif current_time - self.last_movement_time > 200 and self.in_air:
+                self.index = 0
+        elif current_time - self.last_movement_time > 200 and self.in_air and not self.attacking:
             self.last_movement_time = current_time
             if self.index < 8 or self.index == 11:
                 self.index = 8
             else:
                 self.index += 1
-        elif current_time - self.last_movement_time > 200 and self.moving and not self.in_air:
+        elif current_time - self.last_movement_time > 200 and self.moving and not self.in_air and not self.attacking:
             self.last_movement_time = current_time
             if self.index < 4 or self.index >= 7:
                 self.index = 4
+            else:
+                self.index += 1
+        elif current_time - self.last_movement_time > 150 and self.attacking:
+            self.last_movement_time = current_time
+            if self.index == 15:
+                self.index = 0
+                self.attacking = False
             else:
                 self.index += 1
     

@@ -4,6 +4,8 @@ from .player import Player
 from .enemy import Enemy
 from .blocks import Block
 from .attack import Attack
+from .clouds import Cloud
+from .ferris_wheel import FerrisWheel
 from .tilesheet import Tilesheet
 from .tilesheet_manager import create_tilesheets
 from . import save_manager
@@ -41,6 +43,7 @@ class Jumper:
 
         self.all_carnival_sprites = pygame.sprite.Group()
         self.carnival_level_sprites = pygame.sprite.Group()
+        self.background_sprites = pygame.sprite.Group()
         self.minigame_sprites = pygame.sprite.Group()
         self.player_sprite = pygame.sprite.Group()
 
@@ -61,14 +64,29 @@ class Jumper:
         Block(self.all_carnival_sprites, carnival_controls_surf, None, (640, 100))
 
         # Controls info for tent area
-        self.tent_controls_surf = pygame.image.load(join(image_directory, 'player_controls_tent.png')).convert_alpha()
-        self.tent_controls_surf = pygame.transform.scale(self.tent_controls_surf, (250, 133))
+        tent_controls_surf = pygame.image.load(join(image_directory, 'player_controls_tent.png')).convert_alpha()
+        self.tent_controls_surf = pygame.transform.scale(tent_controls_surf, (250, 133))
 
         # Control prompt for entering booth and tent
-        self.booth_prompt_surf = pygame.image.load(join(image_directory, 'enter_minigame_prompt.png')).convert_alpha()
-        self.booth_prompt_surf = pygame.transform.scale(self.booth_prompt_surf, (250, 75))
-        self.tent_prompt_surf = pygame.image.load(join(image_directory, 'enter_tent_prompt.png')).convert_alpha()
-        self.tent_prompt_surf = pygame.transform.scale(self.tent_prompt_surf, (250, 75))
+        booth_prompt_surf = pygame.image.load(join(image_directory, 'enter_minigame_prompt.png')).convert_alpha()
+        self.booth_prompt_surf = pygame.transform.scale(booth_prompt_surf, (250, 75))
+        tent_prompt_surf = pygame.image.load(join(image_directory, 'enter_tent_prompt.png')).convert_alpha()
+        self.tent_prompt_surf = pygame.transform.scale(tent_prompt_surf, (250, 75))
+
+        # Starting and Ending Message
+        starting_message = pygame.image.load(join(image_directory, 'starting_message.png')).convert_alpha()
+        self.starting_message = pygame.transform.scale(starting_message, (450, 200))
+        ending_message = pygame.image.load(join(image_directory, 'ending_message.png')).convert_alpha()
+        self.ending_message = pygame.transform.scale(ending_message, (450, 200))
+
+        Cloud(self.background_sprites, self.tiles['cloud1'], (2000, 50))
+        Cloud(self.background_sprites, self.tiles['cloud2'], (2050, 0))
+        Cloud(self.background_sprites, self.tiles['cloud3'], (2500, 75))
+        Cloud(self.background_sprites, self.tiles['cloud4'], (3300, 60))
+        Cloud(self.background_sprites, self.tiles['cloud5'], (400, 90))
+        Cloud(self.background_sprites, self.tiles['cloud6'], (1100, 120))
+        Cloud(self.background_sprites, self.tiles['cloud7'], (1200, 110))
+        Cloud(self.background_sprites, self.tiles['cloud8'], (4000, 50))
 
         # Creating base world with tiles
         Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['grass_left'], None, (1664, 452))
@@ -80,7 +98,8 @@ class Jumper:
             Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['dirt2_light'], None, (512 * i, 808))
 
         # Ferris wheel sprite pull and create
-        Block(self.all_carnival_sprites, self.tiles['ferris_wheel'], None, (2600, -88))
+        Block(self.background_sprites, self.tiles['ferris_wheel_support'], None, (2600, 150))
+        FerrisWheel(self.background_sprites, self.tiles['ferris_wheel_wheel'], (2600, -38))
 
         # Booth sprite pull and creating
         self.dart_game = Block((self.minigame_sprites, self.all_carnival_sprites), self.tiles['dart_booth'], None, (1200, 296))
@@ -90,10 +109,8 @@ class Jumper:
         # Tent sprite pull and creating
         self.tent = Block(self.all_carnival_sprites, self.tiles['tent'], None, (4000, 168))
 
-        # Use to get new tilesheet sizes
-        test_surf = pygame.image.load(join(image_directory, 'scaffolding_long.png')).convert_alpha()
-        test_rect = test_surf.get_rect(topleft = (0, 0))
-        print(test_rect.bottomright)
+        Block(self.all_carnival_sprites, self.tiles['archway_open'] , None, (428, 284))
+        self.archway = Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['archway_close'] , None, (428, 330))
 
         '''
         Sprites for level and background in tent area
@@ -111,20 +128,41 @@ class Jumper:
         for i in range(4):
             self.zombie_surf.append(pygame.transform.scale(zombie_tilesheet.get_tile(i, 0), (64,128)))
 
-        # Player sprites pull
-        player_run_walk = Tilesheet('player_sprite', 250, 442, 2, 4)
-        player_jump = Tilesheet('player_jumping_sprite', 247, 443, 1, 4)
-        player_surf = []
-        for i in range(4): 
-            player_surf.append(pygame.transform.scale(player_run_walk.get_tile(i, 1), (64, 128)))
-        for i in range(4): 
-            player_surf.append(pygame.transform.scale(player_run_walk.get_tile(i, 0), (64, 128)))
-        for i in range(4): 
-            player_surf.append(pygame.transform.scale(player_jump.get_tile(i, 0), (64, 128)))
-        self.player = Player(self.player_sprite, player_surf)
+        # Park Manager
+        self.manager = Block(self.all_carnival_sprites, self.tiles['sad_manager'], None, (600, 330))
 
+        # player animations
+        player_run_walk_attack = Tilesheet('player_sprite2', 109, 146, 4, 4)
+        player_surf = []
+
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(0, 2), (72, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(0, 2), (72, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(0, 2), (72, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(0, 2), (72, 128)))
+    
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(0, 0), (70, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(1, 0), (68, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(2, 0), (70, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(3, 0), (68, 128)))
+    
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(1, 3), (66, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(1, 3), (66, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(1, 3), (66, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(1, 3), (66, 128)))
+    
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(0, 1), (74, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(1, 1), (80, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(2, 1), (84, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(3, 1), (80, 128)))
+        
+        self.player = Player(self.player_sprite, player_surf)
+        
+        # Use to get new tilesheet sizes
+        test_surf = pygame.image.load(join(image_directory, 'ferris_wheel_wheel.png')).convert_alpha()
+        test_rect = test_surf.get_rect(topleft = (0, 0))
+        print(test_rect.bottomright)
+        
         # Fence sprite pull and creating
-        self.archway = Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['archway_close'] , None, (428, 284))
         Block(self.carnival_level_sprites, None, (280, 300), (428, 0))
         Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_left'], None, (200, 360))
         Block((self.all_carnival_sprites, self.carnival_level_sprites), self.tiles['fence_left'], None, (-6, 360))
@@ -189,7 +227,8 @@ class Jumper:
     def handle_movement(self):
         self.player.original_location = self.player.rect.center
         keys_pressed = pygame.key.get_pressed()
-        if keys_pressed[pygame.K_r] and self.minigame_booth_prompt():
+        if keys_pressed[pygame.K_r] and self.minigame_booth_prompt(True):
+            print(self.minigame_to_play)
             self.carnival_running = False
             self.save_assets()
             if self.minigame_to_play == 'dungeon':
@@ -213,6 +252,7 @@ class Jumper:
             self.player.direction = -1
         else:
             self.player.direction = 0
+
         self.player.rect.x += self.player.direction * PLAYER_SPEED
         horizontal_collide = self.check_horizontal_collision()
         if not horizontal_collide and self.player.direction != 0:
@@ -223,11 +263,11 @@ class Jumper:
         self.player.rect.y += self.player.velocity_y
         vertical_collide = self.check_vertical_collision()
         if not vertical_collide:
-            if not self.player.in_air:
+            if not self.player.in_air and not self.player.attacking:
                 self.player.index = 8
             self.player.in_air = True
         else:
-            if self.player.in_air:
+            if self.player.in_air and not self.player.attacking:
                 self.player.index = 0
             self.player.in_air = False
         if keys_pressed[pygame.K_j] and self.player.in_air == False:
@@ -281,7 +321,9 @@ class Jumper:
         return False
     
     def player_attack(self):
-        Attack((self.all_tent_sprites, self.attack_sprites), (self.player.rect.x + (self.player.original_direction * 50), self.player.rect.centery))
+        Attack( self.attack_sprites, (self.player.rect.centerx + (self.player.original_direction * 40), self.player.rect.centery))
+        self.player.attacking = True
+        self.player.index = 12
     
     def display_character_info(self):
         font = pygame.font.Font(None, 30)
@@ -292,16 +334,15 @@ class Jumper:
         self.display_surface.blit(text_surf1, text_rect1)
         self.display_surface.blit(text_surf2, text_rect2)
 
-    def minigame_booth_prompt(self):
-        self.minigame_to_play = None
+    def minigame_booth_prompt(self, check):
         for booth in self.minigame_sprites:
             if pygame.sprite.collide_rect(self.player, booth):
                 self.display_surface.blit(self.booth_prompt_surf, (booth.rect.x + self.offset_x, booth.rect.y - 75 + self.offset_y))
-                if booth == self.dart_game:
+                if booth == self.dart_game and check:
                     self.minigame_to_play = 'darts'
-                elif booth == self.card_game:
+                elif booth == self.card_game and check:
                     self.minigame_to_play = 'cards'
-                else:
+                elif booth == self.puzzle_game and check:
                     self.minigame_to_play = 'puzzle'
                 return True
         if pygame.sprite.collide_rect(self.player, self.tent):
@@ -334,7 +375,7 @@ class Jumper:
         
         if self.tickets >= 100:
             self.archway.kill()
-            self.archway = Block(self.all_carnival_sprites, self.tiles['archway_open'] , None, (428, 284))
+            self.manager = Block(self.all_carnival_sprites, self.tiles['happy_manager'], None, (600, 330))
 
         while self.carnival_running:
             self.clock.tick(FPS)
@@ -346,11 +387,22 @@ class Jumper:
             self.player.update()
             
             self.display_surface.fill('#a7e0fa')
+            for cloud in self.background_sprites:
+                self.display_surface.blit(cloud.image, (cloud.rect.x + self.offset_x, cloud.rect.y + self.offset_y))
+                self.background_sprites.update()
+
             for sprite in self.all_carnival_sprites:
                 self.display_surface.blit(sprite.image, (sprite.rect.x + self.offset_x, sprite.rect.y + self.offset_y))
+
+            if self.tickets < 100 and self.player.rect.x < 600:
+                self.display_surface.blit(self.starting_message, (630 + self.offset_x, 150 + self.offset_y))
+            elif self.player.rect.x < 600:
+                self.display_surface.blit(self.ending_message, (630 + self.offset_x, 150 + self.offset_y))
+
             self.display_surface.blit(self.player.image, (WINDOW_WIDTH / 2 - 32, WINDOW_HEIGHT / 2 - 64))
+
             self.display_character_info()
-            self.minigame_booth_prompt()
+            self.minigame_booth_prompt(False)
 
             pygame.display.flip()
         tickets_manager.save_tickets(self.tickets)
@@ -391,3 +443,9 @@ class Jumper:
             pygame.display.flip()
 
         self.run_carnival()
+
+    def won(self):
+        pass
+
+    def lost(self):
+        pass

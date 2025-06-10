@@ -77,7 +77,8 @@ def run_puzzle():
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit(); sys.exit()
+                    pygame.quit()
+                    return False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     for b in blocks:
                         if b.rect.collidepoint(event.pos):

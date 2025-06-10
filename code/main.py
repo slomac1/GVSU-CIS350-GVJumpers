@@ -4,6 +4,7 @@ from BlockPuzzle import block
 def play_game():
     current_game = jumper.Jumper()
     current_game.run_carnival()
+    print(current_game.minigame_to_play)
     if current_game.minigame_to_play == 'puzzle':
         play_puzzle()
 
