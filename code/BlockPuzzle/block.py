@@ -129,7 +129,7 @@ def run_puzzle():
     font = pygame.font.SysFont(None, 36)
     if score:
         msg = "You have cleared the puzzle!!"
-        msg2 = f"You have earned {score} points"
+        msg2 = f"You have earned {score} tickets"
         tickets_manager.save_tickets(tickets + score)
     else:
         msg = "You lost. Score: 0"
