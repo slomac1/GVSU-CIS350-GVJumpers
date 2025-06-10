@@ -5,7 +5,6 @@ from .enemy import Enemy
 from .blocks import Block
 from .attack import Attack
 from .clouds import Cloud
-from .ferris_wheel import FerrisWheel
 from .tilesheet import Tilesheet
 from .tilesheet_manager import create_tilesheets
 from . import save_manager
@@ -79,6 +78,12 @@ class Jumper:
         ending_message = pygame.image.load(join(image_directory, 'ending_message.png')).convert_alpha()
         self.ending_message = pygame.transform.scale(ending_message, (450, 200))
 
+        # Win and Loss images
+        win_message = pygame.image.load(join(image_directory, 'won.png')).convert_alpha()
+        self.win_message = pygame.transform.scale(win_message, (900,600))
+        lost_message = pygame.image.load(join(image_directory, 'lost.png')).convert_alpha()
+        self.lost_message = pygame.transform.scale(lost_message, (900,600))
+
         Cloud(self.background_sprites, self.tiles['cloud1'], (2000, 50))
         Cloud(self.background_sprites, self.tiles['cloud2'], (2050, 0))
         Cloud(self.background_sprites, self.tiles['cloud3'], (2500, 75))
@@ -98,8 +103,7 @@ class Jumper:
             Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['dirt2_light'], None, (512 * i, 808))
 
         # Ferris wheel sprite pull and create
-        Block(self.background_sprites, self.tiles['ferris_wheel_support'], None, (2600, 150))
-        FerrisWheel(self.background_sprites, self.tiles['ferris_wheel_wheel'], (2600, -38))
+        Block(self.all_carnival_sprites, self.tiles['ferris_wheel'], None, (2600, -88))
 
         # Booth sprite pull and creating
         self.dart_game = Block((self.minigame_sprites, self.all_carnival_sprites), self.tiles['dart_booth'], None, (1200, 296))
@@ -158,7 +162,7 @@ class Jumper:
         self.player = Player(self.player_sprite, player_surf)
         
         # Use to get new tilesheet sizes
-        test_surf = pygame.image.load(join(image_directory, 'ferris_wheel_wheel.png')).convert_alpha()
+        test_surf = pygame.image.load(join(image_directory, 'lost.png')).convert_alpha()
         test_rect = test_surf.get_rect(topleft = (0, 0))
         print(test_rect.bottomright)
         
@@ -228,9 +232,8 @@ class Jumper:
         self.player.original_location = self.player.rect.center
         keys_pressed = pygame.key.get_pressed()
         if keys_pressed[pygame.K_r] and self.minigame_booth_prompt(True):
-            print(self.minigame_to_play)
             self.carnival_running = False
-            self.save_assets()
+            self.save_assets(True)
             if self.minigame_to_play == 'dungeon':
                 self.dungeon_running = True
                 self.run_dungeon()
@@ -361,13 +364,17 @@ class Jumper:
         self.player.rect.centery = self.game_data["p_recty"]
         self.player.health = min(self.player.health, self.game_data["p_health"])
     
-    def save_assets(self):
-        save_manager.save({"offset_x": self.offset_x,
-                          "offset_y": self.offset_y,
-                          "p_index": self.player.index,
-                          "p_rectx": self.player.rect.centerx,
-                          "p_recty": self.player.rect.centery,
-                          "p_health": self.player.health})
+    def save_assets(self, condition):
+        if condition:
+            save_manager.save({"offset_x": self.offset_x,
+                            "offset_y": self.offset_y,
+                            "p_index": self.player.index,
+                            "p_rectx": self.player.rect.centerx,
+                            "p_recty": self.player.rect.centery,
+                            "p_health": self.player.health})
+        else:
+            save_manager.save(None)
+            self.game_data = None
         return
 
     def run_carnival(self):
@@ -382,8 +389,11 @@ class Jumper:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.carnival_running = False
+                    return
 
             self.handle_movement()
+            if self.dungeon_running == True:
+                return
             self.player.update()
             
             self.display_surface.fill('#a7e0fa')
@@ -406,7 +416,7 @@ class Jumper:
 
             pygame.display.flip()
         tickets_manager.save_tickets(self.tickets)
-        self.save_assets()
+        self.save_assets(True)
 
     def run_dungeon(self):
         self.create_tent_area()
@@ -414,9 +424,18 @@ class Jumper:
         self.player.rect.x = 2350
         while self.dungeon_running == True:
             self.clock.tick(FPS)
+            if self.player.health <= 0:
+                self.display_surface.blit(self.lost_message, (190,60))
+                pygame.display.flip()
+                self.save_assets(False)
+                tickets_manager.save_tickets(0)
+                pygame.time.wait(5000)
+                pygame.quit()
+                return
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.dungeon_running = False
+                    return
 
             self.handle_movement()
             self.player.update()
@@ -429,9 +448,6 @@ class Jumper:
                 attack.update()
 
             self.check_enemy_collision()
-            if self.player.health <= 0:
-                self.dungeon_running = False
-                self.carnival_running = True
 
             self.display_surface.blit(self.tent_background, (self.tent_background_rect.x + (self.offset_x * .25),self.tent_background_rect.y + (self.offset_y * .25)))
             for sprite in self.all_tent_sprites:
@@ -441,11 +457,7 @@ class Jumper:
             self.display_character_info()
 
             pygame.display.flip()
-
         self.run_carnival()
 
     def won(self):
-        pass
-
-    def lost(self):
         pass

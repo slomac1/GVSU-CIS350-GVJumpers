@@ -3,8 +3,7 @@ from .setting import *
 
 def create_tilesheets():
         ground_tilesheet = Tilesheet('update_tile_blocks', 228, 214, 2, 4)
-        wheel_wheel_tilesheet =  Tilesheet('ferris_wheel_wheel', 751, 762, 1, 1)
-        wheel_support_tilesheet = Tilesheet('ferris_wheel_support', 480, 484, 1, 1)
+        ferris_wheel_tilesheet =  Tilesheet('ferris_wheel', 1024, 1024, 1, 1)
         dart_booth_tilesheet = Tilesheet('dart_game_booth', 1024, 1024, 1, 1)
         puzzle_booth_tilesheet = Tilesheet('puzzle_game_booth', 1024, 1024, 1, 1)
         cards_booth_tilesheet = Tilesheet('cards_game_booth', 1024, 1024, 1, 1)
@@ -27,8 +26,7 @@ def create_tilesheets():
             'dirt2_light' : pygame.transform.scale(ground_tilesheet.get_tile(1,1), (256, 256)),
             'dirt_right_light' : pygame.transform.scale(ground_tilesheet.get_tile(2,1), (256, 256)),
             'dirt_left_light' : pygame.transform.scale(ground_tilesheet.get_tile(3,1), (256, 256)),
-            'ferris_wheel_wheel' : pygame.transform.scale(wheel_wheel_tilesheet.get_tile(0,0), (900, 900)),
-            'ferris_wheel_support' : pygame.transform.scale(wheel_support_tilesheet.get_tile(0,0), (400, 550)),
+            'ferris_wheel' : pygame.transform.scale(ferris_wheel_tilesheet.get_tile(0,0), (1024, 1024)),
             'dart_booth': pygame.transform.scale(dart_booth_tilesheet.get_tile(0,0), (256, 256)),
             'puzzle_booth': pygame.transform.scale(puzzle_booth_tilesheet.get_tile(0,0), (256, 256)),
             'card_booth': pygame.transform.scale(cards_booth_tilesheet.get_tile(0,0), (256, 256)),

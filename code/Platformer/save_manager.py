@@ -21,5 +21,7 @@ def load():
     return data
 
 def save(assets):
+    if assets == None:
+        assets = default
     with open(save_file, 'w') as file:
         json.dump(assets, file, indent=4)
