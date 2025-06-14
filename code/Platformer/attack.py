@@ -9,6 +9,6 @@ class Attack(pygame.sprite.Sprite):
         self.create_time = pygame.time.get_ticks()
 
     def update(self):
-        if pygame.time.get_ticks() - self.create_time > 500:
+        if pygame.time.get_ticks() - self.create_time > 100:
             self.kill()
         return

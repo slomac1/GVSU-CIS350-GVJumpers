@@ -1,4 +1,5 @@
 from .setting import *
+from .attack import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups, surf):
@@ -12,8 +13,9 @@ class Player(pygame.sprite.Sprite):
         self.direction = 0
 
         self.health = 100
+        time = pygame.time.get_ticks()
 
-        self.last_movement_time = pygame.time.get_ticks()
+        self.last_movement_time = time
         self.moving = False
         self.original_direction = 1
 
@@ -23,7 +25,10 @@ class Player(pygame.sprite.Sprite):
         self.original_location = [0,0]
         self.current_locaiton = [0,0]
 
-        self.damage_taken_time = pygame.time.get_ticks()
+        self.damage_taken_time = time
+
+        self.last_attack_time = time
+        self.attack_cooldown = 1500
 
     def update(self):
         current_time = pygame.time.get_ticks()
@@ -47,7 +52,7 @@ class Player(pygame.sprite.Sprite):
                 self.index += 1
         elif current_time - self.last_movement_time > 150 and self.attacking:
             self.last_movement_time = current_time
-            if self.index == 15:
+            if self.index == 16:
                 self.index = 0
                 self.attacking = False
             else:
@@ -64,6 +69,12 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.surf[self.index], True, False)
         if self.direction != 0:
             self.original_direction = self.direction
+
+    def attack(self, sprites):
+        if self.original_direction == 1:
+            Attack(sprites, (self.rect.centerx + 50, self.rect.centery))
+        else:
+            Attack(sprites, (self.rect.centerx - 40, self.rect.centery))
 
         
         

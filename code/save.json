@@ -1,8 +1,8 @@
 {
-    "offset_x": 0,
-    "offset_y": 0,
+    "offset_x": -1200,
+    "offset_y": 100,
     "p_index": 0,
-    "p_rectx": 640.0,
-    "p_recty": 390.0,
+    "p_rectx": 1840,
+    "p_recty": 260,
     "p_health": 100
 }

@@ -3,7 +3,6 @@ from random import randint
 from .player import Player
 from .enemy import Enemy
 from .blocks import Block
-from .attack import Attack
 from .clouds import Cloud
 from .tilesheet import Tilesheet
 from .tilesheet_manager import create_tilesheets
@@ -84,14 +83,22 @@ class Jumper:
         lost_message = pygame.image.load(join(image_directory, 'lost.png')).convert_alpha()
         self.lost_message = pygame.transform.scale(lost_message, (900,600))
 
-        Cloud(self.background_sprites, self.tiles['cloud1'], (2000, 50))
-        Cloud(self.background_sprites, self.tiles['cloud2'], (2050, 0))
-        Cloud(self.background_sprites, self.tiles['cloud3'], (2500, 75))
-        Cloud(self.background_sprites, self.tiles['cloud4'], (3300, 60))
-        Cloud(self.background_sprites, self.tiles['cloud5'], (400, 90))
-        Cloud(self.background_sprites, self.tiles['cloud6'], (1100, 120))
-        Cloud(self.background_sprites, self.tiles['cloud7'], (1200, 110))
-        Cloud(self.background_sprites, self.tiles['cloud8'], (4000, 50))
+        Cloud(self.background_sprites, self.tiles['cloud1'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud2'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud3'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud4'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud5'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud6'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud7'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud8'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud1'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud2'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud3'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud4'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud5'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud6'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud7'], (randint(200,5000), randint(-300, 150)))
+        Cloud(self.background_sprites, self.tiles['cloud8'], (randint(200,5000), randint(-300, 150)))
 
         # Creating base world with tiles
         Block((self.carnival_level_sprites, self.all_carnival_sprites), self.tiles['grass_left'], None, (1664, 452))
@@ -136,7 +143,7 @@ class Jumper:
         self.manager = Block(self.all_carnival_sprites, self.tiles['sad_manager'], None, (600, 330))
 
         # player animations
-        player_run_walk_attack = Tilesheet('player_sprite2', 109, 146, 4, 4)
+        player_run_walk_attack = Tilesheet('sprites_02', 384, 512, 4, 4)
         player_surf = []
 
         player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(0, 2), (72, 128)))
@@ -156,13 +163,14 @@ class Jumper:
     
         player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(0, 1), (74, 128)))
         player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(1, 1), (80, 128)))
-        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(2, 1), (84, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(3, 1), (84, 128)))
+        player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(2, 1), (80, 128)))
         player_surf.append(pygame.transform.scale(player_run_walk_attack.get_tile(3, 1), (80, 128)))
         
         self.player = Player(self.player_sprite, player_surf)
         
         # Use to get new tilesheet sizes
-        test_surf = pygame.image.load(join(image_directory, 'lost.png')).convert_alpha()
+        test_surf = pygame.image.load(join(image_directory, 'sprites_02.png')).convert_alpha()
         test_rect = test_surf.get_rect(topleft = (0, 0))
         print(test_rect.bottomright)
         
@@ -231,7 +239,9 @@ class Jumper:
     def handle_movement(self):
         self.player.original_location = self.player.rect.center
         keys_pressed = pygame.key.get_pressed()
-        if keys_pressed[pygame.K_r] and self.minigame_booth_prompt(True):
+        if self.player.index == 15:
+            self.player.attack(self.attack_sprites)
+        if keys_pressed[pygame.K_e] and self.minigame_booth_prompt(True):
             self.carnival_running = False
             self.save_assets(True)
             if self.minigame_to_play == 'dungeon':
@@ -240,13 +250,21 @@ class Jumper:
             else:
                 self.carnival_running = False
             return
-        elif keys_pressed[pygame.K_ESCAPE] and self.dungeon_running:
-            self.dungeon_running = False
-            self.carnival_running = True
-            self.run_carnival()
-            return
-        elif keys_pressed[pygame.K_k] and self.dungeon_running:
-            self.player_attack()
+        elif keys_pressed[pygame.K_ESCAPE]:
+            if self.dungeon_running:
+                self.dungeon_running = False
+                self.carnival_running = True
+                self.run_carnival()
+                return
+            elif self.carnival_running and self.tickets >= 100 and self.player.rect.x < 400:
+                self.carnival_running = False
+                self.dungeon_running = False
+                self.won()
+                return
+        elif keys_pressed[pygame.K_k] and self.dungeon_running and (pygame.time.get_ticks() - self.player.last_attack_time > self.player.attack_cooldown):
+            self.player.last_attack_time = pygame.time.get_ticks()
+            self.player.index = 12
+            self.player.attacking = True
         elif keys_pressed[pygame.K_d] and keys_pressed[pygame.K_a]:
             self.player.direction = 0
         elif keys_pressed[pygame.K_d] and self.player.rect.x < 4400:
@@ -322,11 +340,6 @@ class Jumper:
                     self.player.health -= 10
                     return True
         return False
-    
-    def player_attack(self):
-        Attack( self.attack_sprites, (self.player.rect.centerx + (self.player.original_direction * 40), self.player.rect.centery))
-        self.player.attacking = True
-        self.player.index = 12
     
     def display_character_info(self):
         font = pygame.font.Font(None, 30)
@@ -425,12 +438,7 @@ class Jumper:
         while self.dungeon_running == True:
             self.clock.tick(FPS)
             if self.player.health <= 0:
-                self.display_surface.blit(self.lost_message, (190,60))
-                pygame.display.flip()
-                self.save_assets(False)
-                tickets_manager.save_tickets(0)
-                pygame.time.wait(5000)
-                pygame.quit()
+                self.lost()
                 return
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -460,4 +468,17 @@ class Jumper:
         self.run_carnival()
 
     def won(self):
-        pass
+        self.display_surface.blit(self.win_message, (190,60))
+        pygame.display.flip()
+        self.save_assets(False)
+        tickets_manager.save_tickets(0)
+        pygame.time.wait(5000)
+        pygame.quit(), sys.exit()
+
+    def lost(self):
+        self.display_surface.blit(self.lost_message, (190,60))
+        pygame.display.flip()
+        self.save_assets(False)
+        tickets_manager.save_tickets(0)
+        pygame.time.wait(5000)
+        pygame.quit(), sys.exit()
