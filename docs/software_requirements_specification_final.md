@@ -1,11 +1,10 @@
 # Overview
 
-<Describe the purpose of this document in 1 paragraph of less … hint: it is
-your SRS>
+This document lays out all the functional and non-functional requirements for the 4 games that make up the entiriety of the game experience. Since each games operates in significantly different parameters each one has its own unique requirments. 
 
 # Software Requirements
 
-<Describe the structure of this section>
+The requirements are split into 4 categories for both functional and non-functional. The requirements are labeled with the format x.x.x. Where the first number represents which game the requirement is for. The second number dictates if it is a functional(1) or non-functional(2) requirement. The thrid number is which requirement it is in that category. 
 
 ## Functional Requirements
 
@@ -29,36 +28,36 @@ your SRS>
 | 1.1.14 | If the player exits the gate with more than 100 tickets a “You Win” message shall pop up for 5 seconds, before closing the game. |
 | 1.1.15 | If the player dies in the tent, a “You Lose” message shall appear on screen for 5 seconds before closing the game. |
 
-### <Name of Feature 2>
+### Darts (2.1.x)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: |
-| FR4 | <Requirement 1> | 
-| FR5 | <Requirement 2> | 
-| FR6 | <Requirement 3> | 
+| 2.1.1 | <Requirement 1> | 
+| 2.1.2 | <Requirement 2> | 
+| 2.1.3 | <Requirement 3> | 
 | … | … | 
 
-### <Name of Feature 3>
+### Blackjack (3.1.x)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: |
-| FR4 | <Requirement 1> | 
-| FR5 | <Requirement 2> | 
-| FR6 | <Requirement 3> | 
+| 3.1.1 | <Requirement 1> | 
+| 3.1.2 | <Requirement 2> | 
+| 3.1.3 | <Requirement 3> | 
 | … | … | 
 
-### <Name of Feature 4>
+### Block Puzzle (4.1.x)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: |
-| FR4 | <Requirement 1> | 
-| FR5 | <Requirement 2> | 
-| FR6 | <Requirement 3> | 
+| 4.1.1 | <Requirement 1> | 
+| 4.1.2 | <Requirement 2> | 
+| 4.1.3 | <Requirement 3> | 
 | … | … | 
 
 ## Non-Functional Requirements
 
-### Platformer (1.2.0)
+### Platformer (1.2.x)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
@@ -72,31 +71,31 @@ your SRS>
 | 1.2.8 | The player shall be able to close the window and exit the program at any time by pressing the ‘x’ in the top right corner. |
  
 
-### <Name of Feature 2> 
+### Darts (2.2.x)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
-| NFR1 | <Non-Functional Requirement 1> | 
-| NFR2 | < Non-Functional Requirement 2> |
-| NFR3 | < Non-Functional Requirement 3> |
+| 2.2.1 | <Non-Functional Requirement 1> | 
+| 2.2.2 | < Non-Functional Requirement 2> |
+| 2.2.3 | < Non-Functional Requirement 3> |
 | … | … |
 
-### <Name of Feature 3> 
+### Blackjack (3.2.x)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
-| NFR1 | <Non-Functional Requirement 1> | 
-| NFR2 | < Non-Functional Requirement 2> |
-| NFR3 | < Non-Functional Requirement 3> |
+| 3.2.1 | <Non-Functional Requirement 1> | 
+| 3.2.2 | < Non-Functional Requirement 2> |
+| 3.2.3 | < Non-Functional Requirement 3> |
 | … | … |
 
-### <Name of Feature 4> 
+### Block Puzzle (4.2.x) 
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
-| NFR1 | <Non-Functional Requirement 1> | 
-| NFR2 | < Non-Functional Requirement 2> |
-| NFR3 | < Non-Functional Requirement 3> |
+| 4.2.1 | <Non-Functional Requirement 1> | 
+| 4.2.2 | < Non-Functional Requirement 2> |
+| 4.2.3 | < Non-Functional Requirement 3> |
 | … | … |
 
 
