@@ -50,10 +50,10 @@ The requirements are split into 4 categories for both functional and non-functio
 
 | ID  | Requirement     | 
 | :-------------: | :----------: |
-| 4.1.1 | <Requirement 1> | 
-| 4.1.2 | <Requirement 2> | 
-| 4.1.3 | <Requirement 3> | 
-| … | … | 
+| 4.1.1 | The player will be able to move the blocks around the board to play the game. The player can move the blocks left/right and up/down | 
+| 4.1.2 | The goal is to move the red block across the board in 20 seconds and secure the most points possible | 
+| 4.1.3 | The player will be able to move the blocks in a 2-dimensional format, and not over-lap over other blocks.| 
+| 4.1.4 | The player will have 3 tries to secure as many points as possible. |
 
 ## Non-Functional Requirements
 
