@@ -28,7 +28,7 @@ The requirements are split into 4 categories for both functional and non-functio
 | 1.1.14 | If the player exits the gate with more than 100 tickets a “You Win” message shall pop up for 5 seconds, before closing the game. |
 | 1.1.15 | If the player dies in the tent, a “You Lose” message shall appear on screen for 5 seconds before closing the game. |
 
-### Darts (2.1.x)
+### Darts (2.1.0)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: |
@@ -37,7 +37,7 @@ The requirements are split into 4 categories for both functional and non-functio
 | 2.1.3 | <Requirement 3> | 
 | … | … | 
 
-### Blackjack (3.1.x)
+### Blackjack (3.1.0)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: |
@@ -46,18 +46,18 @@ The requirements are split into 4 categories for both functional and non-functio
 | 3.1.3 | <Requirement 3> | 
 | … | … | 
 
-### Block Puzzle (4.1.x)
+### Block Puzzle (4.1.0)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: |
-| 4.1.1 | <Requirement 1> | 
-| 4.1.2 | <Requirement 2> | 
-| 4.1.3 | <Requirement 3> | 
-| … | … | 
+| 4.1.1 | The player will be able to move the blocks around the board to play the game. The player can move the blocks left/right and up/down | 
+| 4.1.2 | The goal is to move the red block across the board in 20 seconds and secure the most points possible | 
+| 4.1.3 | The player will be able to move the blocks in a 2-dimensional format, and not over-lap over other blocks.| 
+| 4.1.4 | The player will have 3 tries to secure as many points as possible. |
 
 ## Non-Functional Requirements
 
-### Platformer (1.2.x)
+### Platformer (1.2.0)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
@@ -71,7 +71,7 @@ The requirements are split into 4 categories for both functional and non-functio
 | 1.2.8 | The player shall be able to close the window and exit the program at any time by pressing the ‘x’ in the top right corner. |
  
 
-### Darts (2.2.x)
+### Darts (2.2.0)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
@@ -80,7 +80,7 @@ The requirements are split into 4 categories for both functional and non-functio
 | 2.2.3 | < Non-Functional Requirement 3> |
 | … | … |
 
-### Blackjack (3.2.x)
+### Blackjack (3.2.0)
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
@@ -89,7 +89,7 @@ The requirements are split into 4 categories for both functional and non-functio
 | 3.2.3 | < Non-Functional Requirement 3> |
 | … | … |
 
-### Block Puzzle (4.2.x) 
+### Block Puzzle (4.2.0) 
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
