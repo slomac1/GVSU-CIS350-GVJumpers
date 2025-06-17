@@ -1,4 +1,7 @@
 # Overview
+
+## Use-Case Diagram
+
 This document has an extended use-case description for a feature in our project
 
 Use Case: Play mini-game
