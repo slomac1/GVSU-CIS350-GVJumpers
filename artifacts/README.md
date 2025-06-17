@@ -2,7 +2,7 @@
 
 ## Use-Case Diagram
 
-This document has an extended use-case description for a feature in our project
+Extended use-case description
 
 Use Case: Play mini-game
 
