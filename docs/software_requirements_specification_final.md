@@ -109,4 +109,4 @@ The first three links(diagrams) were what we used to lay out our initial design 
 * [Class Diagram](to_some_file.pdf)
 * [Gannt Chart](to_some_file.pdf)
 * [Burn-Down Chart](to_some_file.pdf)
-* [Trello Board](to_some_file.pdf)
+* [Trello Board](https://trello.com/b/qDXeCORB/cis-350-gvjumpers)
