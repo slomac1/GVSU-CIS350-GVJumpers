@@ -39,7 +39,6 @@ The requirements are split into 4 categories for both functional and non-functio
 | 2.1.2 | There shall be 15 darts. |
 | 2.1.3 | After each throw, the number of darts shall decrease by one. |
 | 2.1.4 | The game shall end when the player is out of darts. |
-
 | 2.1.5 | The player shall start will 301 points. |
 | 2.1.6 | After each throw, they point value of where the dart landed shall be calculated. | 
 | 2.1.7 | After each throw, they point value of where the dart landed shall be subtracted from the total score. |
