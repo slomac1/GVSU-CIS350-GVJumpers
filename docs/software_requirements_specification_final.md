@@ -119,5 +119,5 @@ The first three links(diagrams) were what we used to lay out our initial design 
 * [Communication Diagram](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/artifacts/Communication_Diagram.pdf)
 * [Class Diagram](to_some_file.pdf)
 * [Gannt Chart](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/docs/Gantt%20Chart.pdf)
-* [Burn-Down Chart](to_some_file.pdf)
+* [Burn-Down Chart](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/docs/Burn%20Down%20Chart.pdf)
 * [Trello Board](https://trello.com/b/qDXeCORB/cis-350-gvjumpers)
