@@ -96,9 +96,9 @@ The requirements are split into 4 categories for both functional and non-functio
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
-| 4.2.1 | <Non-Functional Requirement 1> | 
-| 4.2.2 | < Non-Functional Requirement 2> |
-| 4.2.3 | < Non-Functional Requirement 3> |
+| 4.2.1 | The Block Puzzle game will have 3 tries to win, and each game will last 20 seconds. | 
+| 4.2.2 | The goal of the player is to bring the red block to the exit area within 20 seconds |
+| 4.2.3 | Each try will have set tickets, with the first attempt being 10 tickets, the second attempt being 7 tickets, and the final attempt being 3 tickets. |
 | … | … |
 
 
