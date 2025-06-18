@@ -35,10 +35,20 @@ The requirements are split into 4 categories for both functional and non-functio
 
 | ID  | Requirement     | 
 | :-------------: | :----------: |
-| 2.1.1 | <Requirement 1> | 
-| 2.1.2 | <Requirement 2> | 
-| 2.1.3 | <Requirement 3> | 
-| … | … | 
+| 2.1.1 | There shall be a dart board. | 
+| 2.1.2 | There shall be 15 darts. |
+| 2.1.3 | After each throw, the number of darts shall decrease by one. |
+| 2.1.4 | The game shall end when the player is out of darts. |
+
+| 2.1.5 | The player shall start will 301 points. |
+| 2.1.6 | After each throw, they point value of where the dart landed shall be calculated. | 
+| 2.1.7 | After each throw, they point value of where the dart landed shall be subtracted from the total score. |
+| 2.1.8 | The game shall end when the total score reaches zero. |
+| 2.1.9 | If the point value of a throw would drop the total score below zero, it shall be invalid. |
+| 2.1.10 | If the throw is invalid, the total score will not decrease due to the throw.| 
+| 2.1.11 | If the throw is invalid, the number of darts will still decrease by one. |
+| 2.1.12 | If the dart lands within the outer circle of red and green sections, the point value of the throw shall be tripled. |
+| 2.1.13 | If the dart lands within the inner circle of red and green sections, the point value of the throw shall be doubled. |
 
 ### Blackjack (3.1.0)
 
@@ -78,10 +88,9 @@ The requirements are split into 4 categories for both functional and non-functio
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
-| 2.2.1 | <Non-Functional Requirement 1> | 
-| 2.2.2 | < Non-Functional Requirement 2> |
-| 2.2.3 | < Non-Functional Requirement 3> |
-| … | … |
+| 2.2.1 | The remaining darts shall be displayed on screen. | 
+| 2.2.2 | The total score shall be displayed on screen. |
+| 2.2.3 | The dart board shall display the point values of the corresponding sections. |
 
 ### Blackjack (3.2.0)
 
