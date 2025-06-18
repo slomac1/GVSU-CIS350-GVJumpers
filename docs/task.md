@@ -6,13 +6,13 @@ A list of high-level task, what they are, how much time to complete, and who is 
 2. Estimate time to complete: 1 week
 3. Who: Chase, Libby, Sidarth, Lucas
 
-## Platformer game and minigame(incomplete)
+## Platformer game and minigame(completed)
 1. A player should be able to control a character via moving left, right and jumping to move around in an
 interactive world and play minigames spread out throughout the level.
 2. Estimated time to complete: 2 weeks
 3. Who: Chase
 
-## Darts minigame(incomplete)
+## Darts minigame(completed)
 1. 1 of 3 minigames located in the main game. Player should be able to throw darts at a board and try to 
 reach a score of 301 with x darts.
 2. Estimated time to complete: 2.5 weeks
