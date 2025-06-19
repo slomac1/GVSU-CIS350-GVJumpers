@@ -9,8 +9,10 @@ For this project we created an interactive world in which you can walk around an
 * [Libby Gresley](https://github.com/LibGres/CIS350-HW2-Gresley) (Developer, Darts)
 * [Lucas Williams](https://github.com/willialt/CIS350-HW2-Williams.git) (Developer, Blackjack)
 
-# Prerequisites
-
 # Run Instuctions
 
-Download executable
+To play our game all you need to do is download the execuatable file(game_manager.exe) attached to the link below and then open that in a folder window. Currently the game is only available for Windows PC's.
+
+Important info about the game. Unfortunatley the Blackjack(card) game can only be played once. There is currently a bug that will close out the game after that. You can relaunch and you will be back where you left off in the platformer world, standing in front of the card booth. Upon restart you will be able to play the card game again but it will crash each time upon the second attempt to play. 
+
+[Download GVJumper Executable](https://github.com/slomac1/GVSU-CIS350-GVJumpers/tree/main/code/dist)
