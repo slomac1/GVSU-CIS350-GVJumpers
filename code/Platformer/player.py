@@ -1,0 +1,81 @@
+from .setting import *
+from .attack import *
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, groups, surf):
+        super().__init__(groups)
+        self.surf = surf
+        self.index = 0
+        self.image = self.surf[self.index]
+        self.rect = self.image.get_rect(center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
+        self.mask = pygame.mask.from_surface(self.image)
+        self.velocity_y = GRAVITY
+        self.direction = 0
+
+        self.health = 100
+        time = pygame.time.get_ticks()
+
+        self.last_movement_time = time
+        self.moving = False
+        self.original_direction = 1
+
+        self.in_air = False
+        self.attacking = False
+
+        self.original_location = [0,0]
+        self.current_locaiton = [0,0]
+
+        self.damage_taken_time = time
+
+        self.last_attack_time = time
+        self.attack_cooldown = 1500
+
+    def update(self):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_movement_time > 200 and not self.moving and not self.in_air and not self.attacking:
+            self.last_movement_time = current_time
+            if self.index == 0:
+                self.index = 1
+            else:
+                self.index = 0
+        elif current_time - self.last_movement_time > 200 and self.in_air and not self.attacking:
+            self.last_movement_time = current_time
+            if self.index < 8 or self.index == 11:
+                self.index = 8
+            else:
+                self.index += 1
+        elif current_time - self.last_movement_time > 200 and self.moving and not self.in_air and not self.attacking:
+            self.last_movement_time = current_time
+            if self.index < 4 or self.index >= 7:
+                self.index = 4
+            else:
+                self.index += 1
+        elif current_time - self.last_movement_time > 150 and self.attacking:
+            self.last_movement_time = current_time
+            if self.index == 16:
+                self.index = 0
+                self.attacking = False
+            else:
+                self.index += 1
+    
+        if self.direction == 1:
+            self.image = self.surf[self.index]
+        elif self.direction == -1:
+            self.image = pygame.transform.flip(self.surf[self.index], True, False)
+        else:
+            if self.original_direction == 1:
+                self.image = self.surf[self.index]
+            else:
+                self.image = pygame.transform.flip(self.surf[self.index], True, False)
+        if self.direction != 0:
+            self.original_direction = self.direction
+
+    def attack(self, sprites):
+        if self.original_direction == 1:
+            PlayerAttack(sprites, (self.rect.centerx + 50, self.rect.centery))
+        else:
+            PlayerAttack(sprites, (self.rect.centerx - 40, self.rect.centery))
+
+        
+        
+        

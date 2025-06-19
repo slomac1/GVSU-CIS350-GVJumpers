@@ -1,14 +1,29 @@
-import json
+import json, os
 
-ticket_file = "tickets.json"
+default = {
+    "tickets": 0
+}
+
+''' 
+Used chatGPT for this the get_save_path. Was able to have it work with a straight path for load and save tickets.
+But needed something more advanded in order to create the executable.
+'''
+def get_save_path(filename):
+    # Use user's Documents folder or AppData
+    save_dir = os.path.join(os.path.expanduser("~"), "JumperSaveData")
+    os.makedirs(save_dir, exist_ok=True)
+    return os.path.join(save_dir, filename)
 
 def load_tickets():
-    with open(ticket_file, 'r') as file:
-        data = json.load(file)
+    try:
+        with open(get_save_path('tickets.json'), 'r') as file:
+            data = json.load(file)
+    except:
+        data = default
     return data["tickets"]
 
 def save_tickets(amount):
-    with open(ticket_file, 'w') as file:
+    with open(get_save_path('tickets.json'), 'w') as file:
         json.dump({"tickets": amount}, file, indent=4)
 
 '''
