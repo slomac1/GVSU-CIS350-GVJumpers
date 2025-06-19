@@ -53,10 +53,13 @@ The requirements are split into 4 categories for both functional and non-functio
 
 | ID  | Requirement     | 
 | :-------------: | :----------: |
-| 3.1.1 | <Requirement 1> | 
-| 3.1.2 | <Requirement 2> | 
-| 3.1.3 | <Requirement 3> | 
-| … | … | 
+| 3.1.1 | There shall be a table surface for the cards to be displayed on | 
+| 3.1.2 | The user shall be able to wager their tickets on each game of blackjack | 
+| 3.1.3 | Playing cards shall be dealt out to the user and and Dealer to begin the game | 
+| 3.1.4 | Players shall have the ability to 'hit', drawing another card |
+| 3.1.5 | Players shall have the ability to 'stand' locking in their point total |
+| 3.1.6 | The dealer shall be able to determine a winner from both player and dealer hands |
+| 3.1.7 | Winnings shall be paid out to the user according to the situation's payout odds | 
 
 ### Block Puzzle (4.1.0)
 
@@ -95,10 +98,11 @@ The requirements are split into 4 categories for both functional and non-functio
 
 | ID  | Requirement     | 
 | :-------------: | :----------: | 
-| 3.2.1 | <Non-Functional Requirement 1> | 
-| 3.2.2 | < Non-Functional Requirement 2> |
-| 3.2.3 | < Non-Functional Requirement 3> |
-| … | … |
+| 3.2.1 | The blackjack game shall have a clear card theme to bolster the games clearity usabilty | 
+| 3.2.2 | Animations used in the game shall be done modestly to not slow the game down |
+| 3.2.3 | Cards dealt shall not cover up other cards preventing the user from seeing what they are |
+| 3.2.4 | The placement of the cards on the table should be positioned so it's clear who they belong to |
+| 3.2.5 | The users balance shall be updated after each hand so that the user doesn't gamble more than inteneded. |
 
 ### Block Puzzle (4.2.0) 
 
@@ -107,7 +111,7 @@ The requirements are split into 4 categories for both functional and non-functio
 | 4.2.1 | The Block Puzzle game will have 3 tries to win, and each game will last 20 seconds. | 
 | 4.2.2 | The goal of the player is to bring the red block to the exit area within 20 seconds |
 | 4.2.3 | Each try will have set tickets, with the first attempt being 10 tickets, the second attempt being 7 tickets, and the final attempt being 3 tickets. |
-| … | … |
+| 4.2.4 | The borders are in bold to show the boundary of the board. |
 
 
 
@@ -117,7 +121,7 @@ The first three links(diagrams) were what we used to lay out our initial design 
 
 * [Use-Case Diagram](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/artifacts/Use-Case_Diagram.pdf)
 * [Communication Diagram](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/artifacts/Communication_Diagram.pdf)
-* [Class Diagram](to_some_file.pdf)
+* [Class Diagram](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/artifacts/Class%20Diagram%20(1).pdf)
 * [Gannt Chart](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/docs/Gantt%20Chart.pdf)
-* [Burn-Down Chart](to_some_file.pdf)
+* [Burn-Down Chart](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/docs/Burn%20Down%20Chart.pdf)
 * [Trello Board](https://trello.com/b/qDXeCORB/cis-350-gvjumpers)
