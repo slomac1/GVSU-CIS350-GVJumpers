@@ -119,7 +119,7 @@ The requirements are split into 4 categories for both functional and non-functio
 
 The first three links(diagrams) were what we used to lay out our initial design and framework for this project. The other three links(Charts and Trello board) are the methods we used in order to keep track of our timeline, progress, and remaining work. 
 
-* [Use-Case Diagram](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/artifacts/Use-Case_Diagram.pdf)
+* [Use-Case Diagram](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/artifacts/Use%20Case%20Diagram2.pdf)
 * [Communication Diagram](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/artifacts/Communication_Diagram.pdf)
 * [Class Diagram](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/artifacts/Class%20Diagram%20(1).pdf)
 * [Gannt Chart](https://github.com/slomac1/GVSU-CIS350-GVJumpers/blob/main/docs/Gantt%20Chart.pdf)
